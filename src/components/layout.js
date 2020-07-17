@@ -48,6 +48,7 @@ const Layout = ({ location, title, children }) => {
     )
   }
   return (
+    
     <div
       style={{
         marginLeft: `auto`,
