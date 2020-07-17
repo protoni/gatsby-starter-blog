@@ -6,56 +6,34 @@ import Layout from "../components/layout"
 import SEO from "../components/seo"
 import { rhythm } from "../utils/typography"
 
-// Notification popup
-import ReactNotification from 'react-notifications-component'
-import 'react-notifications-component/dist/theme.css'
-import { store } from 'react-notifications-component';
-
-let id = 0;
-let ids = [];
-
-
-function addNotification() {
-    store.addNotification({
-    title: "Note!",
-    message: "This website is being migrated from another platform and is still in development, so issues might occur.",
-    type: "info",
-    insert: "top",
-    container: "top-right",
-    animationIn: ["animated", "fadeIn"],
-    animationOut: ["animated", "false"],
-    dismiss: {
-      showIcon:true,
-      duration: 15000,
-      onScreen: true
-    }
-  });
-  
-  
-}
-
-function clearNotifications() {
-    if(ids.length > 0) {
-        console.log("clearing")
-        for(let i = 0; i < ids.length; i++) {
-            store.removeNotification(ids[i]);
-            ids.splice(i, 1);
-        }
-    }
-}
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const BlogIndex = ({ data, location }) => {
   const siteTitle = data.site.siteMetadata.title
   const posts = data.allMarkdownRemark.edges
+  const toastId = React.useRef(null);
   
-  console.log("ids: " + ids.length)
-  //clearNotifications();
-  addNotification();
+  const notify = () => {
+    if(! toast.isActive(toastId.current)) {
+      toastId.current = toast.info('🐍 Hi! This website is still in development. Issues might occur.', {
+        position: "top-right",
+        autoClose: 30000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+  }
+  
+  notify();
   
   return (
     
     <div>
-    <ReactNotification />
+    <ToastContainer className="foo" style={{ width: "30%" }} />
         <Layout location={location} title={siteTitle}>
         <SEO title="All posts" />
         <Bio />
