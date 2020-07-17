@@ -2,6 +2,7 @@
 title: Website in development
 date: "2020-07-17T21:27:37.121Z"
 description: "I added annoying popups."
+tags: ["react"]
 ---
 
 I'm experimenting with this site so it might be broken from time to time. 

@@ -2,6 +2,7 @@
 title: Initial commit
 date: "2020-07-17T19:12:03.284Z"
 description: "First post"
+tags: ["misc"]
 ---
 
 So I made this github hosted and netlifycms managed gatsby-site for testing purposes and to documentate some of the
