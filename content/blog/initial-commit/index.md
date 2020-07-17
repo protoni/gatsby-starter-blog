@@ -7,13 +7,15 @@ description: "First post"
 So I made this github hosted and netlifycms managed gatsby-site for testing purposes and to documentate some of the
 things I work on on my spare time.
 
+I used to have a website running on wordpress.com, got bored of it due to lack of customizability and moved to self hosted 
+wordpress.org, didn't like that either and now I'm trying this stack.
+
 I like how easy this was to setup. The default gatsby theme is fully customizable 
 and adding new content is really easy, just git push new content to github and netlifycms build system starts building/publishing
 the changes.
 
-I used to have a website running on wordpress.com, got bored of it due to lack of customizability and moved to self hosted 
-wordpress.org, didn't like that either and now I'm trying this stack.
-
+Here, have a look at this confusing gif I made:
+![Netlifycms thing](./netlifycms.gif)
 
 Links:
 * https://github.com/
