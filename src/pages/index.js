@@ -52,6 +52,16 @@ const BlogIndex = ({ data, location }) => {
                     </Link>
                 </h3>
                 <small>{node.frontmatter.date}</small>
+                <b> - tags: </b>
+              <Link
+                style={{
+                  boxShadow: `none`,
+                  color: `007acc`,
+                }}
+                to={'/tags/' + node.frontmatter.tags}
+              >
+                {node.frontmatter.tags}
+              </Link>
                 </header>
                 <section>
                 <p
