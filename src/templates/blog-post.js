@@ -10,11 +10,12 @@ const BlogPostTemplate = ({ data, pageContext, location }) => {
   const post = data.markdownRemark
   const siteTitle = data.site.siteMetadata.title
   const { previous, next } = pageContext
-
+  const tagLink = '/tags/' + post.frontmatter.tags
   return (
     <Layout location={location} title={siteTitle}>
       <SEO
         title={post.frontmatter.title}
+        tags = {post.frontmatter.tags}
         description={post.frontmatter.description || post.excerpt}
       />
       <article>
@@ -35,6 +36,16 @@ const BlogPostTemplate = ({ data, pageContext, location }) => {
             }}
           >
             {post.frontmatter.date}
+              <b> - tags: </b>
+              <Link
+                style={{
+                  boxShadow: `none`,
+                  color: `007acc`,
+                }}
+                to={tagLink}
+              >
+                {post.frontmatter.tags}
+              </Link>
           </p>
         </header>
         <section dangerouslySetInnerHTML={{ __html: post.html }} />
@@ -95,6 +106,7 @@ export const pageQuery = graphql`
         title
         date(formatString: "MMMM DD, YYYY")
         description
+        tags
       }
     }
   }

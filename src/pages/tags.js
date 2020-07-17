@@ -30,7 +30,7 @@ const TagsPage = ({
           }}
           to={`/`}
         >
-          {'<'}
+          {'< Home'}
         </Link>
       </h1>
     <div style={{textAlign:"center"}}>

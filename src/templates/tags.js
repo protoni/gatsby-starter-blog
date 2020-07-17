@@ -27,7 +27,7 @@ const Tags = ({ pageContext, data }) => {
           }}
           to={`/tags`}
         >
-          {'<'}
+          {'< All tags'}
         </Link>
       </h1>
       <div style={{textAlign:"center"}}>
