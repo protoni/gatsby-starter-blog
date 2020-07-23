@@ -11,7 +11,7 @@ after about 11 hours worth of lessons.
 A triangle:
 ![First triangle](./firstTriangle.PNG)
 
-It's a pretty low level graphics API, the triangle required around 1,2k lines of code + headers.
+It's a pretty low level graphics API, the triangle required around 1.2k lines of code + headers.
 ![Lines of code](./codeLinesOnFirstTriangle.PNG)
 
 A lot of code is required because Vulkan is very verbose and a big portion of the code is just 
