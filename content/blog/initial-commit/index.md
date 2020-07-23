@@ -5,7 +5,7 @@ description: "First post"
 tags: ["misc"]
 ---
 
-So I made this github hosted and netlifycms managed gatsby-site for testing purposes and to documentate some of the
+So I made this github hosted and netlifycms served gatsby-site for testing purposes and to documentate some of the
 things I work on on my spare time.
 
 I used to have a website running on wordpress.com, got bored of it due to lack of customizability and moved to self hosted 
@@ -17,6 +17,7 @@ the changes.
 
 Here, have a look at this confusing gif I made:
 ![Netlifycms thing](./netlifycms.gif)
+
 
 Links:
 * https://github.com/
