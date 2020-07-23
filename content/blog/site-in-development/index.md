@@ -23,6 +23,17 @@ The notification doesn't really look good on mobile at the moment tho.
 Did this with a few lines of code:
 ![Notification codes](./notificationCode.PNG)
 
+## Update 23.07.2020
+I also added tag system to the website for easier access to related content.
+![Tags](./tags.PNG)
+
+Tags can be seen on the front site below the post name and also on the individual blog post pages.
+
+Basically the tags are added to the frontmatter of the markdown files and so they can be queried using graphql.
+
+The visual layout still might need some decorating but it works.
+![Minimal tags](./tagsMinimal.PNG)
 
 Links:
 * https://www.npmjs.com/package/react-toastify
+* https://www.gatsbyjs.org/docs/adding-tags-and-categories-to-blog-posts/
