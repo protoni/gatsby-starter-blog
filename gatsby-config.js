@@ -1,8 +1,8 @@
 
-// Gatsby settings for the environment variablesrequire("dotenv").config({
-require("dotenv").config({
-  path: `.env.${process.env.NODE_ENV}`
-})
+// Gatsby settings for the environment variables // Google analytics plugin ( Disabled on 26.07.2020 )
+//require("dotenv").config({
+//  path: `.env.${process.env.NODE_ENV}`
+//})
 
 module.exports = {
   siteMetadata: {
@@ -86,12 +86,12 @@ module.exports = {
     // To learn more, visit: https://gatsby.dev/offline
     // `gatsby-plugin-offline`,
     
-    // Google analytics plugin
-    {
-      resolve: `gatsby-plugin-google-analytics`,
-      options: {
-        trackingId: process.env.GA_TRACKING_ID
-      }
-    },
+    // Google analytics plugin ( Disabled on 26.07.2020 )
+    //{
+    //  resolve: `gatsby-plugin-google-analytics`,
+    //  options: {
+    //    trackingId: process.env.GA_TRACKING_ID
+    //  }
+    //},
   ],
 }
