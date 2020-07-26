@@ -14,7 +14,7 @@ A triangle:
 It's a pretty low level graphics API, the triangle required around 1.2k lines of code + headers.
 ![Lines of code](./codeLinesOnFirstTriangle.PNG)
 
-A lot of code is required because Vulkan is very verbose and a big portion of the code is just 
+Vulkan is very verbose and alot of code is required to set it up initially. Big portion of the code is just 
 filling structure types with a bunch of settings for the Vulkan.
 ![Structs](./structs.PNG)
 
