@@ -57,8 +57,6 @@ Random models from https://free3d.com
 ![Model importing](./modelImport3.gif)
 
 Orgrimmar from World of Warcraft
-![Model loading](./org.gif)
-
 <dl>
   <video width="640" height="480" controls>
     <source src="../orgrimmar.mp4" type="video/mp4">
