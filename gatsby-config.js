@@ -8,13 +8,13 @@ module.exports = {
   siteMetadata: {
     title: `Protoni's site`,
     author: {
-      name: `Kyle Mathews`,
-      summary: `who lives and works in San Francisco building useful things.`,
+      name: `protoni`,
+      summary: `who likes to dabble in tech.`,
     },
-    description: `A starter blog demonstrating what Gatsby can do.`,
-    siteUrl: `https://gatsby-starter-blog-demo.netlify.app/`,
+    description: `A site for projects and notes.`,
+    siteUrl: `https://protoni.fi`,
     social: {
-      twitter: `kylemathews`,
+      twitter: ``,
     },
   },
   plugins: [
@@ -31,6 +31,10 @@ module.exports = {
         path: `${__dirname}/content/assets`,
         name: `assets`,
       },
+    },
+    {
+      resolve: `gatsby-remark-copy-linked-files`,
+      options: {},
     },
     {
       resolve: `gatsby-transformer-remark`,
