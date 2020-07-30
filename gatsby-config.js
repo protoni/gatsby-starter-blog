@@ -36,6 +36,9 @@ module.exports = {
       resolve: `gatsby-remark-copy-linked-files`,
       options: {},
     },
+    // Skip links
+    `gatsby-remark-autolink-headers`,
+    
     {
       resolve: `gatsby-transformer-remark`,
       options: {

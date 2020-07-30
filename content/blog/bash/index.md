@@ -8,13 +8,13 @@ tags: ["linux"]
 Decided to put my bash notes on here as well.
 
 ### Content
-- 1. Arrays
+- [1. Arrays](#Arrays)
 - 2. File parameters
 - 3. File reading
 - 4. Functions
 - 5. If statements
 - 6. Input
-- 7. Variables
+- [Variables](#variables)
 
 ---
 
@@ -501,7 +501,7 @@ You typed: test1
 
 ---
 
-### 7. Variables
+##variables
 
 **Increment a counter:**
 ```bash{numberLines: true}
