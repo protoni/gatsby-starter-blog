@@ -8,17 +8,17 @@ tags: ["linux"]
 Decided to put my bash notes on here as well.
 
 ### Content
-- [1. Arrays](#Arrays)
-- 2. File parameters
-- 3. File reading
-- 4. Functions
-- 5. If statements
-- 6. Input
+- [Arrays](#arrays)
+- [File parameters](#file-parameters)
+- [File reading](#file-reading)
+- [Functions](#functions)
+- [If statements](#if-statements)
+- [Input](#input)
 - [Variables](#variables)
 
 ---
 
-### 1. Arrays
+### Arrays
 **add to array:**
 ```bash{numberLines: true}
 # Declare a new array
@@ -122,7 +122,7 @@ done
 
 ---
 
-### 2. File parameters
+### File parameters
 
 
 **Get the number of file parameters:**
@@ -173,7 +173,7 @@ $ ./parameterTest.sh
 
 ---
 
-### 3. File reading
+### File reading
 
 **Load file contents to an array:**
 ```
@@ -219,7 +219,7 @@ testRow3
 
 ---
 
-### 4. Functions
+### Functions
 
 
 **Use a global variable that was defined in a function:**
@@ -401,7 +401,7 @@ printRet() output: test_var
 
 ---
 
-### 5. If statements
+### If statements
 
 **One if-condition:**
 ```bash{numberLines: true}
@@ -475,7 +475,7 @@ $ ./isGreaterThan.sh
 
 ---
 
-### 6. Input
+### Input
 
 **Read user input from the shell:**
 ```bash{numberLines: true}
@@ -501,7 +501,7 @@ You typed: test1
 
 ---
 
-##variables
+### Variables
 
 **Increment a counter:**
 ```bash{numberLines: true}
