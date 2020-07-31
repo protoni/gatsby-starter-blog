@@ -10,8 +10,6 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../css/projects-grid.css';
 
-// Icons
-import electronicsLogo from '../../content/assets/icons/bolt.svg';
 
 const BlogIndex = ({ data, location }) => {
   const siteTitle = data.site.siteMetadata.title
@@ -48,6 +46,7 @@ const BlogIndex = ({ data, location }) => {
               <line x1="13" y1="17" x2="19" y2="17" />
             </svg>
           </Link>
+          
           <p style={{fontSize: '0.9em', fontWeight: 'bold'}}>{"Linux"} ({tag.totalCount})</p>
           
         </div>
