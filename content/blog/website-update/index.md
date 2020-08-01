@@ -22,7 +22,7 @@ the bage so I added this little icon to the bottom right corner to help with thi
 I tried some npm packages at first which would do this but they seemed overly complex for what the component actually does.
 
 I was googling around what would be the best way to implement this. I ran into this issue on github and in the comments a 
-user shared his implementation so I decided to use that as well, seems to work pretty well and the implementation seems clean.
+user( https://github.com/donaldboulton ) shared his implementation so I decided to use that as well, seems to work pretty well and the implementation seems clean.
 
 - https://github.com/v4iv/gatsby-starter-business/issues/23
 - https://publiuslogic.com/
@@ -75,6 +75,9 @@ at the same time.
 
 I of course also decided to download the theme css, save it to the project folder and modify it to my liking.
 
+The theme is prism.js okaidia and it's modified a little by me.
+https://prismjs.com/
+
 ### Categories
 Browsing content on the website felt a bit awkward so I decided to add categories to the front page.
 I use the tags on the markdown file frontmatter to act as categories for now. 
@@ -91,3 +94,6 @@ Categories on the front page:
 - https://github.com/v4iv/gatsby-starter-business/issues/23
 - https://publiuslogic.com/
 - https://www.gatsbyjs.org/docs/quick-start/
+- https://github.com/donaldboulton
+- https://prismjs.com/
+- https://www.gatsbyjs.org/packages/gatsby-remark-autolink-headers/
