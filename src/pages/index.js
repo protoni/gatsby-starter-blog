@@ -35,7 +35,7 @@ const BlogIndex = ({ data, location }) => {
   notify();
   
   let items = group.map(tag => (
-    tag.fieldValue == "linux" ?
+    tag.fieldValue === "linux" ?
       (
         /* bolt.svg ( https://tablericons.com/ ) */
         <div>
@@ -51,7 +51,7 @@ const BlogIndex = ({ data, location }) => {
           
         </div>
       )
-    :tag.fieldValue == "electronics" ?
+    :tag.fieldValue === "electronics" ?
       (
         /* bolt.svg ( https://tablericons.com/ ) */
         <div>
@@ -65,7 +65,7 @@ const BlogIndex = ({ data, location }) => {
           
         </div>
       )
-    :tag.fieldValue == "graphics" ?
+    :tag.fieldValue === "graphics" ?
       (
         /* bolt.svg ( https://tablericons.com/ ) */
         <div>
@@ -81,7 +81,7 @@ const BlogIndex = ({ data, location }) => {
           <p style={{fontSize: '0.9em', fontWeight: 'bold'}}>{"Graphics"} ({tag.totalCount})</p>
         </div>
       )
-    :tag.fieldValue == "web" ?
+    :tag.fieldValue === "web" ?
       (
         /* bolt.svg ( https://tablericons.com/ ) */
         <div>
@@ -96,7 +96,7 @@ const BlogIndex = ({ data, location }) => {
           <p style={{fontSize: '0.9em', fontWeight: 'bold'}}>{"Web"} ({tag.totalCount})</p>
         </div>
       )
-    :tag.fieldValue == "misc" ?
+    :tag.fieldValue === "misc" ?
       (
         /* bolt.svg ( https://tablericons.com/ ) */
         <div>
@@ -109,6 +109,23 @@ const BlogIndex = ({ data, location }) => {
             </svg>
           </Link>
          <p style={{fontSize: '0.9em', fontWeight: 'bold'}}>{"Misc"} ({tag.totalCount})</p>
+        </div>
+      )
+    :tag.fieldValue === "protoni website" ?
+      (
+        /* bolt.svg ( https://tablericons.com/ ) */
+        <div>
+          <Link to={`/tags/${kebabCase(tag.fieldValue)}/`} style={{ boxShadow: 'none' }}>
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-sitemap" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2196F3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z"/>
+              <rect x="3" y="15" width="6" height="6" rx="2" />
+              <rect x="15" y="15" width="6" height="6" rx="2" />
+              <rect x="9" y="3" width="6" height="6" rx="2" />
+              <path d="M6 15v-1a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v1" />
+              <line x1="12" y1="9" x2="12" y2="12" />
+            </svg>
+          </Link>
+         <p style={{fontSize: '0.9em', fontWeight: 'bold'}}>{"Protoni website"} ({tag.totalCount})</p>
         </div>
       )
     :
@@ -159,13 +176,13 @@ const BlogIndex = ({ data, location }) => {
                         </Link>
                     </h3>
                     <small>{node.frontmatter.date}</small>
-                    <b> - tags: </b>
+                    <b> - category: </b>
                   <Link
                     style={{
                       boxShadow: `none`,
                       color: `007acc`,
                     }}
-                    to={'/tags/' + node.frontmatter.tags}
+                    to={'/tags/' + kebabCase(node.frontmatter.tags)}
                   >
                     {node.frontmatter.tags}
                   </Link>

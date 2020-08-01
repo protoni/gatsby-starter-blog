@@ -5,12 +5,13 @@ import Bio from "../components/bio"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import { rhythm, scale } from "../utils/typography"
+import kebabCase from "lodash/kebabCase"
 
 const BlogPostTemplate = ({ data, pageContext, location }) => {
   const post = data.markdownRemark
   const siteTitle = data.site.siteMetadata.title
   const { previous, next } = pageContext
-  const tagLink = '/tags/' + post.frontmatter.tags
+  const tagLink = '/tags/' + kebabCase(post.frontmatter.tags)
   return (
     <Layout location={location} title={siteTitle}>
       <SEO
@@ -36,7 +37,7 @@ const BlogPostTemplate = ({ data, pageContext, location }) => {
             }}
           >
             {post.frontmatter.date}
-              <b> - tags: </b>
+              <b> - category: </b>
               <Link
                 style={{
                   boxShadow: `none`,
