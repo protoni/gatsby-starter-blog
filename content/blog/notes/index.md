@@ -986,6 +986,8 @@ Usually this is for asynchronously DMAing data between host and device memory on
 - [Internet explorer problems](#internet-explorer-problems)
 - [NodeJS notes](#nodejs-notes)
 - [React notes](#react-notes)
+- [Gatsby notes](#gatsby-notes)
+- [Wordpress notes](#wordpress-notes)
 
 ##### Angular setup
 ````bash
@@ -1187,6 +1189,135 @@ https://github.com/react-icons/react-icons
 # Good React practices.
 https://www.reddit.com/r/reactjs/comments/cgxg7o/a_beginners_guide_to_writing_good_react_code/
 https://arvind.io/posts/writing-good-react-code/
+````
+
+&nbsp
+
+##### Gatsby notes
+````bash
+
+# Add video as inline HTML
+Add video to /static/ folder
+<dl>
+  <video width="640" height="480" controls>
+    <source src="../bandicam.mp4" type="video/mp4">
+  </video>
+</dl>
+
+# Bold formatting 
+To be able to use '_' in **bolded** text, it needs to be escaped with '\'-character infront of it
+For example: io_scene_godot needs to be written like **io\_scene\_godot**
+````
+
+&nbsp
+
+##### Wordpress notes
+````bash
+
+
+
+## Add borders to images ( adds borders to all images on the website )
+
+# 1. Go to customize page
+Dashboard -> Appearance -> Customize
+
+# 2. Go to CSS settings
+'Additional CSS'
+
+# 3. Add custom CSS to the edit box
+.post .entry-content img {border: 1px solid #000000;}
+
+# 4. Click publish
+
+
+
+## Install SiteLock-trust shield
+
+# Get the shield
+
+# 1. Go to SiteLock dashboard
+https://secure.sitelock.com/dashboard
+
+# 2. On the top of the page:
+Click Deploy 'SiteLock Trust Seal' button
+
+# 3. Fill out the settings
+
+# 4. Copy the html code on the last settings page.
+
+
+
+## Install the SiteLock logo to the website footer
+# 1. Edit the page
+Dashboard -> Appearance -> Customize
+
+# 2. Make sure you have footer bar.
+Layout -> Footer
+
+# 3. Add the logo to footer
+Widgets -> Footer bar -> Add a widget -> paste the html here.
+
+# 4. Publish.
+
+
+
+## Collapse content ( collapse text with a button click )
+
+# 1. Install collapse pugin.
+Show-Hide / Collapse-Expand
+
+# 2. Add to a new post and wrap bg_collapse and /bg_collapse around brackets []:
+
+bg_collapse view="link" color="#4286f4" icon="arrow" expand_text="Show More" collapse_text="Show Less"
+
+your_content_here
+
+/bg_collapse
+
+
+## Collapse a whole block with a button click
+
+# 1. Install Atomic Blocks plugin.
+
+# 2. Add new AB container.
+
+# 3. Add a code block inside the AB container.
+
+# 4. Add to a new post:
+bg_collapse view="link" color="#4286f4" icon="arrow" expand_text="Show More" collapse_text="Show Less"
+<div class="wp-block-atomic-blocks-ab-container ab-block-container">
+<div class="ab-container-inside">
+<div class="ab-container-content" style="max-width:1600px">
+Content1
+</div>
+</div>
+</div>
+/bg_collapse
+
+# 5. Edit html:
+add the bg_collapse and /bg_collapse tags wrapped around brackets [] around the div
+
+
+
+## Add skip links
+
+# 1. Add a new headline and edit the HTML.
+- Hover over the headline and click the 3 dots ( more settings )
+- Click 'Edit as HTML'
+
+# 2. Add id="skipToHere" id for the tag
+<h2 id="skipTo4">4. Add skip links<br></h2>
+
+# 3. Write the link name to the top of the page.
+
+# 4. Paint the link name with your mouse.
+
+# 5. Click the 'paper clip' button and set the link to #skipToHere
+
+
+
+
+
 ````
 
 &nbsp
