@@ -1,6 +1,6 @@
 ---
 title: Random old projects
-date: "2020-08-02T21:33:03.284Z"
+date: "2020-08-04T00:13:03.284Z"
 description: "Old projects I did when I was learning programming."
 tags: ["misc"]
 ---
@@ -931,7 +931,7 @@ else:
 
 ### Other
 
-- [BBS image scraper](#bbs-image-scaper)
+- [BBS image scraper](#bbs-image-scraper)
 - [Clapswitch](#clapswitch)
 - [Radial drill controller fix](#radial-drill-controller-fix)
 
