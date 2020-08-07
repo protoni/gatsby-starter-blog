@@ -32,11 +32,14 @@ pre[class*="language-"] {
 	padding: 1em;
 	margin: .5em 0;
 	border-radius: 0.3em;
-    overflow:auto;
+    overflow-x: hidden;
     
 }
 
-
+pre[class*="language-"]:hover {
+    overflow-x: auto;
+    
+}
 
 :not(pre) > code[class*="language-"],
 pre[class*="language-"] {
@@ -144,14 +147,16 @@ pre[class*="language-"] {
   border-radius: 0.3em;
   margin: 0.5em 0;
   padding: 0;
+  overflow-y: hidden;
+  overflow-x: hidden;
   max-height: 40em;
   font-size: 13px;
-  overflow: auto;
-  max-height: 40em;
-  
 }
 
-
+.gatsby-highlight:hover {
+    overflow-y: scroll;
+    overflow-x: auto;
+}
 
 .line-numbers-rows {
   padding-left:10px;
