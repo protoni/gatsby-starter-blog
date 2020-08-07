@@ -31,15 +31,11 @@ pre[class*="language-"] {
 pre[class*="language-"] {
 	padding: 1em;
 	margin: .5em 0;
-	overflow-x: hidden;
 	border-radius: 0.3em;
-    
+    overflow:auto;
 }
 
-pre[class*="language-"]:hover {
-    overflow-x: auto;
-    
-}
+
 
 :not(pre) > code[class*="language-"],
 pre[class*="language-"] {
@@ -147,22 +143,14 @@ pre[class*="language-"] {
   border-radius: 0.3em;
   margin: 0.5em 0;
   padding: 0;
-  overflow-y: hidden;
-  overflow-x: hidden;
-  
-  
-  
   max-height: 40em;
-  
-  
   font-size: 13px;
+  overflow: auto;
+  max-height: 40em;
+  resize: both;
 }
 
-.gatsby-highlight:hover {
-    overflow-y: scroll;
-    resize: both;
 
-}
 
 .line-numbers-rows {
   padding-left:10px;
