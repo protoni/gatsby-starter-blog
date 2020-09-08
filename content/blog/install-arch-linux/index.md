@@ -9,15 +9,26 @@ This is a re-write of my old Arch Linux installation notes. Originally they were
 they became too hard to read at some point so I decided to combine these notes to a proper blog post. The blog post was originally created
 to my old wordpress website a couple of years ago. Decided I would migrate this to here as well.
 
+### Table of contents:
+- 1 [VirtualBox setup](#virtualbox-setup)
+- 2 [Starting Arch Linux virtual machine](#starting-arch-linux-virtual-machine)
+- 3 [Setting up network connection](#setting-up-network-connection)
+- 4 [Setup disk partitions](#setup-disk-partitions)
+- 5 [System setup](#system-setup)
+- 6 [Configure network](#configure-network)
+- 7 [Install sound](#install-sound)
+- 8 [Install display server](#install-display-server)
+- 9 [Install desktop environment](#install-desktop-environment)
+- 10 [TLDR](#tldr)
 
-## Requirements:
-* Time and patience.  
-* Virtual machine ( or why not a real machine ) 
-* Arch Linux image 
+### Requirements:
+* Time and patience.
+* Virtual machine ( or why not a real machine )
+* Arch Linux image
 * 1GB RAM
 * 8GB free hard disk space
 
-## Steps:
+### Steps:
 1. Install VirtualBox
 2. Install Arch Linux
 3. ???
@@ -26,13 +37,13 @@ to my old wordpress website a couple of years ago. Decided I would migrate this 
 Easy, huh? So lets begin by installing the virtual machine so we can actually launch the Arch Linux!
 
 
-## Download:
+### Download:
 * https://www.virtualbox.org/wiki/Downloads
 * https://www.archlinux.org/download/
 
 ![VirtualBox setup](./setupvm.png)
 
-#### 1. VirtualBox setup
+### VirtualBox setup
 1. Click New
 2. Select the 64-bit Arch Linux and select a machine folder
 3. Allocate RAM for the virtual machine. Recommended 1024MB should be enough.
@@ -55,7 +66,7 @@ Click Start, select 64-bit Arch Linux as a start-up disk and click Start.
 
 ![Arch GRUB bootloader](./archgrub.png)
 
-#### 2. Starting Arch Linux virtual machine
+### Starting Arch Linux virtual machine
 2.1 Click Boot Arch Linux ( x86_64 ). After Linux boots up, you should be sitting at root@archiso shell.
 
 2.2 ( Optional ) set the keyboardlayout temporarily to finnish. ( Or whatever your language is. Default is english ) 
@@ -68,7 +79,7 @@ ping google.com
 ```
 2.4 **If your connection works**, skip to step 4.
 
-#### 3. Setting up network connection
+### Setting up network connection
 
 3.1 Check the ethernet card status and the drivers it uses. Command lists information about PCI buses and devices. Scroll up and search for Ethernet controller portion.
 ```
@@ -101,7 +112,7 @@ I have started a fresh Arch install.
 Of course there are many possible reasons why the connection is not working, especially wireless connection, 
 but this is all that I have documented on my notes. If this doesn’t help, some googling is required to go forward I’m afraid.
 
-#### 4. Setup disk partitions. 
+### Setup disk partitions
 
 4.1 Check the disk name:
 ```
@@ -117,6 +128,9 @@ cgdisk /dev/sda
 ```
 
 4.3 Create a boot partition:
+
+**Note! Consider allocating more memory than 5GB for the root file system**
+
 ```
 - Press New
 - Size -> 512M
@@ -223,7 +237,7 @@ Mount sda4 to home directory:
 mount /dev/sda4 /mnt/home
 ```
 
-#### 4. System setup. 
+### System setup
 5.1 Install the system:
 ```
 pacstrap -i /mnt base base-devel
@@ -455,4 +469,414 @@ Login with the username and password that you configured earlier. And once you l
 ## Congratulations! You have just installed Arch Linux!
 
 At this point some more steps are going to be needed so that the Arch Linux build would be useful for anything, like installing sound and graphical user interface.
-( Coming later.. )
+
+&nbsp
+
+---
+
+### Configure network
+Network needs to actually be re-configured, because the network setup during install has no effect on the actual system.
+
+![Network down](./ping1.png)
+
+Once again, check the name of the network driver:
+```bash
+lspci -v
+```
+
+![lspci -v output](./lspci-1.png)
+
+Check the network interface name from the dmesg output:
+```bash
+dmesg | grep e1000
+```
+
+![Dmesg output](./dmesg2-1.png)
+
+So my interface name is enp0s3. Now it needs to be configured to the DHCP client
+```bash
+sudo dhcpcd enp0s3
+```
+
+![dhcpcd output](./dhcpcd.png)
+
+To make the fix permanent, we need to enable the dhcpcd service, so that we have a network connection at startup.
+```bash
+systemctl enable dhcpcd.service
+```
+
+Now the network should be back up, try to ping google servers once again:
+```bash
+ping google.com
+```
+
+![Network up](./ping.png)
+
+Install **net-tools** to get ifconfig working:
+```bash
+sudo pacman -S net-tools
+```
+
+Run **ifconfig** to see network information:
+```bash
+ifconfig
+```
+
+![ifconfig output](./ifconfig.png)
+
+&nbsp
+
+---
+
+### Install sound
+
+Install sound card drivers ( ALSA ):
+```bash
+sudo pacman -S alsa-utils
+```
+
+&nbsp
+
+---
+
+### Install display server
+
+- Choose 1: **libglvnd** ( These containt the latest drivers from the official repo. )
+- Press **Y**
+```bash
+pacman -S xorg-server xorg-xinit xorg-server-utils
+```
+
+Install 3D acceleration:
+```bash
+pacman -S mesa
+```
+
+Choose the correct driver:
+
+|  Manuf      |       Driver       |     If 64bit      |
+|:-----------:|:------------------:|:-----------------:|
+| **AMD/ATI** |   xf86-video-ati   |   lib32-ati-dri   |
+|  **Intel**  | xf86-video-intel   |  lib32-intel-dri  |
+|  **Nvidia** | xf86-video-nouveau | lib32-nouveau-dri |
+
+Install graphics card drivers:
+```bash
+sudo pacman -S xf86-video-intel
+sudo pacman -S lib32-intel-dri
+```
+
+Install touchpad drivers, if you have a laptop:
+```bash
+pacman -S xf86-input-synaptics
+```
+
+&nbsp
+
+---
+
+### Install desktop environment
+
+**Choose one** from the wiki:
+
+https://wiki.archlinux.org/index.php/desktop_environment.
+
+I usually go with the **Xfce4**.
+
+Click **enter** to all prompts ( defaults )
+```bash
+pacman -S xfce4 xfce4-goodies
+```
+
+Configure desktop environment:
+```bash
+cp /etc/X11/xinit/xinitrc ~/.xinitrc
+```
+```bash
+sudo nano ~/.xinitrc
+```
+
+To load your keyboard layout add **before exec line**: ( change the **fi** to your language )
+```bash
+setxkbmap -layout fi
+```
+
+**Add line** to the end of the file: ( Replace **startxfce4** with your DE. for example startlxde )
+```bash
+exec startxfce4
+```
+
+Edit bash profile file:
+```bash
+sudo nano ~/.bash_profile
+```
+
+**Add line** to the end of the file:
+```bash
+[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx
+```
+
+**Now the Desktop Environment has been set up. You can run the DE by running:**
+```bash
+startxfce4
+```
+
+Keyboard layout hasn’t been loaded yet, the system needs to be rebooted once for the keyboard layout to take effect.
+```bash
+sudo reboot
+```
+
+Install fonts:
+```bash
+pacman -S ttf-dejavu
+```
+
+&nbsp
+
+---
+
+### Once again, Congrats!
+
+You should now have a working Arch Linux installation with GUI and everything.
+I might do some follow up articles for the Arch Linux installation, for example customizing Xmonad Desktop Environment.
+
+![Arch Linux working](./xfce4.png)
+
+Now that I have everything setup, the root partition is taking 63% of the allocated 5GB size.
+You really might want to allocate a lot more for the partitions.
+
+![Disk usage](./df.png)
+
+### Notes:
+```
+If you get stuck on login screen ( X server crashing ):
+Press Ctrl + ALT + F2 so you can go to reconfigure ~/.xinitrc for example # (F1 - F7) F1 has the X server running.
+```
+
+&nbsp
+
+---
+
+### TLDR
+
+These are my raw notes, terminology might not be 100% correct, might contain more typos etc.
+```
+1. loadkeys fi
+
+2. ping google.com
+
+
+    if network is not working try:
+    
+    - lspci -v: search for ethernet driver name for example 'tg3'
+    
+    -dmesg | grep tg3:
+    
+        if driver is down run:
+    
+            - rmmod tg3
+    
+            - modprobe tg3
+
+3. fdisk -l # check the harddrive name for the next command
+
+4. gdisk /dev/sda # *possibly not needed*
+
+
+
+---------------- THIS IS FOR SSD DRIVES -------------------
+
+----- Use alternative (cfdisk) below if you have HDD ------
+
+
+
+5. cgdisk 
+
+    - new 1gb boot section (EF00) # 1024MiB
+    
+    - new (half of ram) sized swap (8200) # 2048MiB
+    
+    - new 20gb root (8300) # 20000MiB
+    
+    - new rest of the space sized home (8300) # the rest of the space
+
+
+
+type lsblk to check partition names
+
+
+
+6. mkfs.fat -F32 /dev/sda1 # create boot
+
+7. mkswap /dev/sda2 # create swap
+
+8. swapon /dev/sda2 # turn swap on
+
+9. mkfs.ext4 /dev/sda3 # create root partition
+
+10. mkfs.ext4 /dev/sda4 # create home partition
+
+11. mkdir /mnt # create /mnt directory
+
+12. mount /dev/sda3 /mnt # mount root to /mnt
+
+13. mkdir /mnt/boot 
+
+14. mkdir /mnt/home
+
+15. mount /dev/sda1 /mnt/boot
+
+16. mount /dev/sda4 /mnt/home
+
+
+(5. alternaitve) cfdisk /dev/sda
+
+    - delete all existing partitions
+    
+    - create new partition sized half of your ram size
+    
+        - set type to primari and linux swap
+    
+    - create new partition with the remaining disk space
+    
+        - set type to primary and linux bootable
+    
+    - hit write
+    
+    
+    
+        - mkfs.ext4 /dev/sda2 # format to ext4
+    
+        - mount /dev/sda2 /mnt # mount root
+    
+        - mkswap /dev/sda1 # make swap partition
+    
+        - swapon /dev/sda1 # init swap partition
+
+
+17. cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup # create a backup of the mirrorlist
+
+18. sed -i 's/^#Server/Server/' /etc/pacman.d/mirrorlist.backup # uncomments all the servers in the mirrorlist.backup
+
+19. rankmirrors -n 6 /etc/pacman.d/mirrorlist.backup > /etc/pacman.d/mirrorlist # ping through the mirrors
+
+#in mirrorlist.backup and stdout them into real mirrorlist (this will take about 5-10minutes)
+
+20. pacstrap -i /mnt base base-devel # install arch linux base and base-devel packages (install all)
+
+21. genfstab -U -p /mnt >> /mnt/etc/fstab # generate fstab file
+
+22. nano /mnt/etc/fstab # cheack that the 4 partitions exists in here. Or 2 if you used the alternative partitioning example.
+
+23. arch-chroot /mnt # chroot into /mnt
+
+24. nano /etc/locale.gen # uncomment en_US-UTF8
+
+25. locale-gen # generate locale files
+
+26. echo LANG=en_US.UTF-8 > /etc/locale.conf # create locale.conf and put en_US.UTF as default language
+
+27. export LANG=en_US.UTF-8
+
+28. nano /etc/vconsole.conf
+
+# write in the file:
+
+    #KEYMAP=fi
+    
+    #FONT=Lat2-Terminus16
+
+29. ls /usr/share/zoneinfo/Europe/ # check that Helsinki is in the folder
+
+30. ln -s /usr/share/zoneinfo/Europe/Helsinki /etc/localtime # set timezone
+
+31. hwclock --systohc --utc
+
+32. echo <hostname> > /etc/hostname
+
+33. nano /etc/pacman.conf
+
+# uncomment [multilib] and Include below it
+
+# add to the end of the file:
+
+    [archlinuxfr]
+    
+    SigLevel = Never
+    
+    Server = http://repo.archlinux.fr/$arch
+
+34. pacman -Syu # update system
+
+35. pacman -S yaourt # install user repository package
+
+36. passwd # setup new root password
+
+37. useradd -m -g users -G wheel -s /bin/bash <username> # add new user to group 'wheel'
+
+38. EDITOR=nano visudo # enable sudo for user. Remove #-sign from #%wheel ALL=(ALL) ALL 
+
+39. passwd <user> # change newly created user password
+
+40. pacman -S bash-completion # helps complete package names in the shell
+
+
+
+----------------------------------------------------
+
+----- SKIP IF YOU ARE NOT INSTALLING FROM EFI ------
+
+----------------------------------------------------
+
+
+
+41. mount -t efivarfs efivarfs /sys/firmware/efi/efivars # check that EFI variables are mounted
+
+42. bootctl --path=/boot install # install EFI to boot
+
+----------------------------------------------------
+
+----------------------------------------------------
+
+----------------------------------------------------
+
+
+
+43. nano /boot/loader/entries/arch.conf
+
+# type to the file:
+
+    title Arch Linux
+    
+    linux /vmlinuz-linux
+    
+    initrd /intel-ucode.img # if pc has intel cpu
+    
+    initrd /initramfs-linux.img
+    
+    options root=/dev/sda3 rw
+
+44. pacman -S intel-ucode # if pc has intel cpu
+
+45. pacman -S grub-bios # download bootloader
+
+    if this doesnt work try:
+    
+        pacman -Sy efibootmgr
+    
+        grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=grub --recheck
+
+46. grub-install /dev/sda # install bootloader to harddrive
+
+47. mkinitcpio -p linux # create init file for root
+
+48. exit
+
+49. grub-mkconfig -o /boot/grub/grub.cfg # create grub config file
+
+50. umount /mnt # unmount the drive
+
+51. reboot
+```
+
+&nbsp
