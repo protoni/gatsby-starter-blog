@@ -142,6 +142,8 @@ https://github.com/Stadicus/guides/blob/master/raspibolt/README.md
 - [MongoDB notes](#mongodb-notes)
 - [MySQL remote server setup](#mysql-remote-server-setup)
 - [MySQLdump](#mysqldump)
+- [MySQL notes](#mysql-notes)
+- [MySQL workbench notes](#mysql-workbench-notes)
 
 ##### MongoDB notes
 ````bash
@@ -210,6 +212,79 @@ mysqldump -uroot -pmysql DATABASE_NAME TABLE_NAME > DATABASE_NAME_TABLE_NAME.sql
 # Restore a table:
 mysql -uroot -pmysql DATABASE_NAME < DATABASE_NAME_TABLE_NAME.sql
 
+````
+
+&nbsp
+
+##### MySQL notes
+````bash
+## Change user password:
+
+# 1. Login to mysql as root:
+mysql -uroot -p
+
+# 2. use mysql;
+
+# 3. Change password in versions < 5.7.5
+SET PASSWORD FOR 'user'@'localhost' = PASSWORD('PASSWORD_HERE');
+
+# 4. Change passwords in versions > 5.7.5
+ALTER USER 'user'@'localhost' IDENTIFIED BY 'PASSWORD_HERE';
+
+
+
+## Create a new user
+# Show users
+
+# Create admin user
+CREATE USER 'admin'@'localhost' IDENTIFIED BY 'PASSWORD_HERE';
+
+# Set privileges
+GRANT ALL PRIVILEGES ON * . * TO 'admin'@'localhost';
+
+# Reload privileges
+FLUSH PRIVILEGES;
+
+
+## Fix error: ER_NOT_SUPPORTED_AUTH_MODE
+# Login to mysql root
+mysql -uroot -p
+
+# Change user password to mysql native password
+ALTER USER 'admin'@'localhost' IDENTIFIED WITH mysql_native_password BY 'PASSWORD_HERE';
+````
+
+&nbsp
+
+##### MySQL workbench notes
+````bash
+## If 'mysql' and other internal schemas are missing:
+Edit -> Preferences -> SQL Editor -> Show Metadata and Internal Schemas -> OK -> Hit refresh in the 'SCHEMAS' view.
+
+## Connect remotely to mysql database.
+
+# 1. Create a SSH tunnel
+Putty -> Session -> Host Name -> 192.168.1.35
+Putty -> Connection -> Data -> Auto-login username -> pi
+Putty -> Connection -> SSH -> Auth -> Private key file for authentication -> PRIVATE_KEY_HERE
+Putty -> Connection -> SSH -> Auth -> Tunnels -> Source port: 3306
+Putty -> Connection -> SSH -> Auth -> Tunnels -> Destination: 127.0.0.1:3306 -> Add
+Putty -> Sessions -> set name to 'Saved sessions' -> Save
+
+# 2. Download MySQL Workbench
+
+# 3. Create a new connection
+Database -> Manage connections -> New
+Hostname:  127.0.0.1
+Port:      3306
+Username:  USER_NAME_HERE
+Password:  Store in Vault
+Test Connection
+
+# 4. Open connection
+Database -> Connect to database ->
+Stored Connection: STORED_CONNECTION_HERE
+Connection Method: Standard(TCP/IP)
 ````
 
 &nbsp
@@ -699,19 +774,23 @@ edit /etc/default/openvpn and uncomment line: AUTOSTART="all"
 ##### Linux setup git SSH keys
 ````bash
 # Create keys:
-ssh-keygen -t rsa
+1. ssh-keygen -t rsa
 
 # Create config:
-nano ~/.ssh/config
+2. nano ~/.ssh/config
     paste in file:
         Host gitserv
-        Hostname gitlab.com
+        Hostname github.com
         IdentityFile ~/.ssh/id_rsa
         IdentitiesOnly yes
         
 
-# GitLab settings
-paste ~/.ssh/id_rsa.pub content to gitlab settings
+3. paste ~/.ssh/id_rsa.pub content to github settings
+
+# If 2fa has been enabled:
+github.com -> User icon (top right) -> Settings -> Developer settings -> Personal access tokens
+-> Generate new token -> Set name and scope -> save access token
+Use access token in 'Password' field when pulling from github in command line
 ````
 
 &nbsp
@@ -775,6 +854,7 @@ sudo dd if=/dev/urandom of=/dev/sda
 - [Notepad++ notes](#notepadpp-notes)
 - [Trello notes](#trello-notes)
 - [Vulkan notes](#vulkan-notes)
+- [Partkeepr setup](#partkeepr-setup)
 
 ##### How to create skip links in Atlassian confluence wiki pages
 ````
@@ -972,6 +1052,139 @@ For example, the device supports three kinds of queues:
 - Another kind can only do transfer operations, and you can only create one queue of this kind. 
 Usually this is for asynchronously DMAing data between host and device memory on discrete GPUs, so transfers can be done concurrently with independent graphics/compute operations.
 - Finally, you can create up to 8 queues that are only capable of compute operations.
+````
+
+&nbsp
+
+### Partkeepr setup
+````bash
+## Setup
+# 1. Install php
+sudo apt-get install php
+
+# 2. Find out which php.ini file is the web server using
+Create a file named 'phpinfo.php' to the /var/www/html/ folder
+Add to the file:
+ <?php
+ phpinfo();
+ ?>
+Go to the web page with a browser: http://192.168.1.35/phpinfo.php
+Check the 'Loaded Configuration File' field
+
+# 3. edit php.init
+nano /etc/php/7.3/cli/php.ini
+
+# 4. make sure that:
+ 4.1 'allow_url_fopen' is on
+ 4.2 safe_mode = Off
+ 4.3 'extension=fileinfo' uncomment this
+ 4.4 Set the timezone for this field: date.timezone = Europe/Helsinki 
+ ( see available timezones here: https://www.php.net/manual/en/timezones.php )
+ 4.5 uncomment: extension=gd2
+ 4.6 uncomment: extension=ldap
+
+# 5. Make sure that apache is installed and running
+
+# 6. Install php curl
+sudo apt-get install php7.3-curl
+
+# 7. Install DoctrineORM
+sudo apt-get install composer
+composer require doctrine/doctrine-orm-module
+
+# Had this file under the folder where I ran 'composer require', not sure if relevant:
+ {
+    "require": {
+        "doctrine/orm": "^2.6.2",
+        "symfony/yaml": "2.*"
+    },
+    "autoload": {
+        "psr-0": {"": "src/"}
+    }
+}
+
+# 8. Download partkeepr.zip and extract to /var/www/html/
+https://partkeepr.org/download/
+
+# 9. Go to the setup folder with a browser
+http://192.168.1.35/partkeepr-1.4.0/web/setup/
+
+# 10. Click next and fix all of the possible errors and warnings. I had to change these:
+sudo nano /etc/php/7.3/cli/php.ini -> set 'max_execution_time' to 600
+sudo apt-get install php7.3-gd
+sudo apt-get install php7.3-ldap
+sudo apt-get install php-xml
+sudo apt-get install php7.3-mysql
+sudo apt-get install php-intl
+sudo apt-get install php-apcu php-apcu-bc
+sudo chmod -R 777 /var/www/html/parkeepr-1.4.0/data
+sudo chmod -R 777 /var/www/html/parkeepr-1.4.0/app
+sudo chmod -R 777 /var/www/html/parkeepr-1.4.0/web
+
+# Had a few warnings left, will fix them if issues occur
+- PHP APCu cache not found
+- Maximum Execution Time might be too low
+
+# 11. Fix Web Server Configuration error
+# Edit apache config /etc/apache2/apache2.conf and add these:
+    # Include external config
+    Include /etc/apache2/httpd.conf
+    
+# Create /etc/apache2/httpd.conf and add these:
+    <VirtualHost *:80>
+        ServerName localhost
+
+        DocumentRoot /var/www/html/partkeepr-1.4.0/web/
+        AcceptPathInfo on
+
+        ErrorDocument 403 "<h1>Item management system update in progress. Check back in a few minutes.</h1>"
+
+        <Directory /var/www/html/partkeepr-1.4.0/web/>
+                Require all granted
+                AllowOverride All
+        </Directory>
+
+        ## Logging
+        ErrorLog "/var/log/apache2/partkeepr_error.log"
+        ServerSignature Off
+        CustomLog "/var/log/apache2/partkeepr_access.log" combined
+    </VirtualHost>
+
+# Enable .htaccess. Edit /etc/apache2/sites-available/000-default.conf, add lines:
+    # Enable .htaccess file
+    <Directory "/var/www/html/partkeepr-1.4.0">
+      AllowOverride All
+    </Directory>
+
+# Create .htaccess file
+touch /var/www/html//var/www/html/partkeepr-1.4.0/.htaccess
+
+# Activate mod_rewrite
+sudo a2enmod rewrite
+
+# 12. Restart apache if there was errors
+sudo systemctl restart apache2
+
+# 13. Follow the partkeepr setup until SQL connection part ( Take a note on the database creation queries).
+
+# 14. Install a database
+sudo apt install mariadb-server-10.0
+sudo /usr/bin/mysql_secure_installation
+    Change the root password? [Y/n] n
+    Remove anonymous users? [Y/n] y
+    Disallow root login remotely? [Y/n] y
+    Remove test database and access to it? [Y/n] y
+    Reload privilege tables now? [Y/n]
+
+# 15. Log in to the root database user
+sudo mysql -uroot -p
+
+# 16. Create the database
+CREATE DATABASE Storage CHARACTER SET UTF8;
+GRANT USAGE ON *.* TO root@localhost IDENTIFIED BY 'PUT_PW_HERE';
+GRANT ALL PRIVILEGES ON Storage.* TO root@localhost;
+
+# 17. 
 ````
 
 &nbsp
