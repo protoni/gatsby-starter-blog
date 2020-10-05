@@ -56,9 +56,11 @@ const Bio = () => {
           borderRadius: `50%`,
         }}
       />
+      <div>
       <p>
-        Written by <strong>protoni</strong>
+        Written by <strong>protoni</strong>. Contact at <strong>toni@protoni.fi</strong>
       </p>
+      </div>
     </div>
   )
 }

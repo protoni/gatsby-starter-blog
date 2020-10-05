@@ -281,11 +281,11 @@ Not a complete list, just throwing things here from the top of my head.
 - [ ] Edit component-function
 - [ ] Figure out proper names for component data fields
 - [ ] Add proper layout for the single component view page.
-- [ ] File upload system needs to be able
+- [ ] File upload system in 'add component' view needs an option to select thumbnail picture
 - [ ] Item type selector to the 'add component'-view ( component, dev board, misc ).
 - [ ] Change input fields based on the type in the 'add component'-view.
 - [ ] Add tests
-- [ ] Remove files-function
+- [ ] Remove files-button in add component-view.
 - [ ] Re-structure backend code
 - [ ] Bulk import components from .csv
 - [ ] Image / pdf / text file viewer to the single component view page
