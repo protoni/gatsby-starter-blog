@@ -1,7 +1,7 @@
 ---
 title: OSD3358 Linux and Click boards
 date: "2020-10-28T22:08:03.284Z"
-description: "Development update for a component storage system."
+description: "Messing around with Click boards"
 tags: ["electronics"]
 ---
 
@@ -456,6 +456,7 @@ sudo apt-get install make unrar-free autoconf automake libtool gcc g++ gperf \
 sudo apt-get install libtool-bin
 cd esp-open-sdk
 make
+export PATH="/PATH_TO_ESP_PROJECT/esp-open-sdk/xtensa-lx106-elf/bin:$PATH"
 ```
 
 &nbsp
